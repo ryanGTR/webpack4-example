@@ -10,7 +10,7 @@ module.exports = {
   output: {
     filename: '[name]-bundle.js',
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
+    publicPath: './',
   },
   devServer: {
     contentBase: 'dist',
@@ -60,7 +60,6 @@ module.exports = {
       {
         test: /\.html$/,
         use: [
-
           {
             loader: 'html-loader',
             options: {
