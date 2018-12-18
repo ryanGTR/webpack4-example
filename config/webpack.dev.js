@@ -1,90 +1,85 @@
-const path = require('path');
-const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require("path")
+const webpack = require("webpack")
+const HTMLWebpackPlugin = require("html-webpack-plugin")
+const { VueLoaderPlugin } = require("vue-loader")
 
 module.exports = {
   entry: {
-    main: ['./src/main.js'],
+    main: ["./src/main.js"]
   },
-  mode: 'development',
+  mode: "development",
   output: {
-    filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: './',
+    filename: "[name]-bundle.js",
+    path: path.resolve(__dirname, "../dist"),
+    publicPath: "/"
   },
   devServer: {
-    contentBase: 'dist',
+    contentBase: "dist",
     overlay: true,
-    hot: true,
     stats: {
-      colors: true,
-    },
+      colors: true
+    }
   },
-  devtool: 'source-map',
+  devtool: "source-map",
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    }
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.vue$/,
         use: [
           {
-            loader: 'babel-loader',
-          },
-        ],
+            loader: "vue-loader"
+          }
+        ]
+      },
+      {
+        test: /\.js$/,
         exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ]
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader"
           },
-          {
-            loader: 'css-loader',
-          },
-        ],
+          { loader: "css-loader" }
+        ]
       },
       {
-        test: /\.sass$/,
+        test: /\.jpg$/,
         use: [
           {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-          },
-        ],
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]"
+            }
+          }
+        ]
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
-            options: {
-              attrs: ['img:src'],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(jpg|gif|png)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name]-[hash:8].[ext]',
-            },
-          },
-        ],
-      },
-    ],
+            loader: "html-loader"
+          }
+        ]
+      }
+    ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.html',
-    }),
-  ],
-};
+      template: "./src/index.html"
+    })
+  ]
+}

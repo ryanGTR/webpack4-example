@@ -1,12 +1,13 @@
 import Vue from "vue"
 
 export default Vue.component("Profile", {
-    data:() => ({
-        name: "Clay"
-    }),
-    template: `
+  data: () => ({
+    name: "Law's"
+  }),
+  template: `
     <div class="profile">
-    <img src="./images/link.jpg" alt="">
-    <h1>{{ name }}</h1>
-    </div>` 
+      <img src="./images/link.jpg" alt="">
+      <h1>{{ name }} Journal</h1>
+    </div>
+  `
 })
